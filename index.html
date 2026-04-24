@@ -850,6 +850,108 @@ h3 { font-size: var(--h3-size); font-weight: 500; }
 }
 
 /* =====================================
+   TIMELINE GANTT (year planning)
+   ===================================== */
+.gantt {
+    display: grid;
+    grid-template-columns: clamp(140px, 14vw, 180px) repeat(12, 1fr);
+    gap: 2px;
+    width: 100%;
+    margin-top: clamp(0.5rem, 1vw, 0.75rem);
+    font-size: var(--tiny-size);
+}
+
+.gantt-header,
+.gantt-track-label {
+    padding: clamp(0.4rem, 0.8vw, 0.65rem) clamp(0.3rem, 0.6vw, 0.5rem);
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: clamp(0.7rem, 0.85vw, 0.8rem);
+    line-height: 1.1;
+}
+
+.gantt-track-label {
+    text-align: left;
+    color: var(--text-primary);
+    background: var(--bg-card);
+    border-radius: 8px 0 0 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.2rem;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: clamp(0.78rem, 0.95vw, 0.92rem);
+}
+
+.gantt-track-label .track-meta {
+    font-size: clamp(0.65rem, 0.8vw, 0.75rem);
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.gantt-quarter-band {
+    grid-column: span 3;
+    text-align: center;
+    padding: clamp(0.25rem, 0.5vw, 0.4rem);
+    color: var(--text-muted);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    font-size: clamp(0.65rem, 0.8vw, 0.75rem);
+    background: rgba(255,255,255,0.03);
+    border-radius: 4px;
+}
+
+.gantt-cell {
+    padding: clamp(0.5rem, 1vw, 0.85rem) clamp(0.15rem, 0.3vw, 0.3rem);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-muted);
+    text-align: center;
+    font-size: clamp(0.62rem, 0.75vw, 0.72rem);
+    font-weight: 500;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: clamp(36px, 5vh, 50px);
+    position: relative;
+    overflow: hidden;
+}
+
+.gantt-cell.low      { background: rgba(168, 85, 247, 0.08); color: var(--text-muted); }
+.gantt-cell.medium   { background: rgba(168, 85, 247, 0.25); color: var(--text-secondary); border: 1px solid rgba(168, 85, 247, 0.4); }
+.gantt-cell.high     { background: rgba(168, 85, 247, 0.55); color: var(--text-primary); font-weight: 700; border: 1px solid var(--accent-purple); }
+.gantt-cell.peak     { background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-violet) 100%); color: white; font-weight: 800; box-shadow: 0 0 16px rgba(168, 85, 247, 0.5); }
+.gantt-cell.launch   { background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-purple) 100%); color: white; font-weight: 800; box-shadow: 0 0 18px rgba(45, 212, 191, 0.5); }
+.gantt-cell.milestone { background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-violet) 100%); color: white; font-weight: 700; }
+
+.gantt-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(0.5rem, 1.2vw, 1rem);
+    justify-content: center;
+    margin-top: clamp(0.5rem, 1vw, 0.75rem);
+    font-size: var(--tiny-size);
+    color: var(--text-muted);
+}
+
+.gantt-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.gantt-legend-swatch {
+    width: clamp(14px, 1.6vw, 18px);
+    height: clamp(10px, 1.2vw, 14px);
+    border-radius: 3px;
+}
+
+/* =====================================
    ANIMATIONS — REVEAL ON VISIBLE
    ===================================== */
 .reveal {
@@ -2357,61 +2459,135 @@ h3 { font-size: var(--h3-size); font-weight: 500; }
             <div class="brand-mark">04 · Ejecución</div>
             <div class="slide-num">30 / 40</div>
         </div>
-        <div class="reveal section-label">Secuencia del año</div>
-        <h1 class="reveal">Del CRM <span class="italic-accent">hoy</span> al lanzamiento PFP en <span class="italic-accent">Q4</span>.</h1>
+        <div class="reveal section-label">Timeline anual de prioridades</div>
+        <h1 class="reveal">Dónde está el foco <span class="italic-accent">en cada momento</span> del año.</h1>
 
-        <p class="reveal subtitle" style="margin-top:clamp(0.5rem,1.2vw,1rem); color:var(--accent-pink); font-style:italic;">
-            Primero sistematizar la captación actual. Después escalar con la plataforma.
-        </p>
+        <div class="reveal gantt" style="margin-top: clamp(0.75rem, 1.2vw, 1rem);">
+            <!-- Header row: empty corner + 12 months -->
+            <div class="gantt-track-label" style="background: transparent;"></div>
+            <div class="gantt-quarter-band">Q2 · 2026</div>
+            <div class="gantt-quarter-band">Q3 · 2026 (verano)</div>
+            <div class="gantt-quarter-band">Q4 · 2026</div>
+            <div class="gantt-quarter-band" style="background: rgba(45, 212, 191, 0.08);">Q1 · 2027</div>
 
-        <div class="reveal" style="margin-top: clamp(0.75rem, 1.5vw, 1.25rem); flex:1; min-height:0; display:grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: clamp(0.4rem, 1vw, 0.75rem);">
-            <div class="card strong">
-                <div style="font-size:var(--tiny-size); color:var(--accent-teal); font-weight:700; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:0.5rem;">Q2 · Ahora</div>
-                <h3>Setup + matching</h3>
-                <ul>
-                    <li>Call aterrizaje CRM (pipelines)</li>
-                    <li>Mapping 100+ inversores → riesgo vs. deuda vs. incentivo</li>
-                    <li>Activar matching <strong>cupo incentivo fiscal</strong></li>
-                    <li>Inicio testing ECPs (FO, PE, farmas, notarios)</li>
-                </ul>
+            <!-- Month labels -->
+            <div class="gantt-track-label" style="background: transparent;"></div>
+            <div class="gantt-header">Abr</div>
+            <div class="gantt-header">May</div>
+            <div class="gantt-header">Jun</div>
+            <div class="gantt-header">Jul</div>
+            <div class="gantt-header">Ago</div>
+            <div class="gantt-header">Sep</div>
+            <div class="gantt-header">Oct</div>
+            <div class="gantt-header">Nov</div>
+            <div class="gantt-header">Dic</div>
+            <div class="gantt-header">Ene</div>
+            <div class="gantt-header">Feb</div>
+            <div class="gantt-header">Mar</div>
+
+            <!-- Track 1: Incentivo fiscal -->
+            <div class="gantt-track-label">
+                💰 Incentivo fiscal
+                <span class="track-meta">Cupo + inversores +50k€</span>
             </div>
+            <div class="gantt-cell low">setup</div>
+            <div class="gantt-cell medium">arranque</div>
+            <div class="gantt-cell high">activo</div>
+            <div class="gantt-cell peak">FOCO</div>
+            <div class="gantt-cell peak">FOCO</div>
+            <div class="gantt-cell peak">FOCO</div>
+            <div class="gantt-cell high">cierre</div>
+            <div class="gantt-cell medium">cierre</div>
+            <div class="gantt-cell low">balance</div>
+            <div class="gantt-cell low">—</div>
+            <div class="gantt-cell low">—</div>
+            <div class="gantt-cell medium">prep '27</div>
 
-            <div class="card strong">
-                <div style="font-size:var(--tiny-size); color:var(--accent-pink); font-weight:700; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:0.5rem;">Q3 · Verano</div>
-                <h3>Incentivo fiscal · FOCO</h3>
-                <ul>
-                    <li><strong>Temporada incentivo fiscal</strong> (mayo en adelante)</li>
-                    <li>Colocar cupo grande con tickets +50k€</li>
-                    <li>Awareness inversor profesional B2B</li>
-                    <li>Aprobación CNMV (esperada)</li>
-                </ul>
+            <!-- Track 2: Anticipo -->
+            <div class="gantt-track-label">
+                ⚡ Anticipo (SPV)
+                <span class="track-meta">Bonificación 7% · garantías</span>
             </div>
+            <div class="gantt-cell medium">activo</div>
+            <div class="gantt-cell low">bajo</div>
+            <div class="gantt-cell low">bajo</div>
+            <div class="gantt-cell low">—</div>
+            <div class="gantt-cell low">—</div>
+            <div class="gantt-cell medium">prep Q4</div>
+            <div class="gantt-cell high">re-enganche</div>
+            <div class="gantt-cell peak">FOCO</div>
+            <div class="gantt-cell peak">FOCO</div>
+            <div class="gantt-cell high">cierre</div>
+            <div class="gantt-cell medium">balance</div>
+            <div class="gantt-cell low">—</div>
 
-            <div class="card">
-                <div style="font-size:var(--tiny-size); color:var(--accent-purple); font-weight:700; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:0.5rem;">Q4 · Anticipo + PFP</div>
-                <h3>Re-enganche + launch</h3>
-                <ul>
-                    <li><strong>Anticipo Q4</strong>: re-enganche + captación nueva</li>
-                    <li>Teaser PFP Sep · waitlist</li>
-                    <li>PFP multiproducto deuda garantizada</li>
-                    <li>Pro Tax partnerships (Beto, Andbank)</li>
-                </ul>
+            <!-- Track 3: PFP -->
+            <div class="gantt-track-label">
+                🚀 PFP regulada
+                <span class="track-meta">Multiproducto deuda garantizada</span>
             </div>
+            <div class="gantt-cell medium">desarrollo</div>
+            <div class="gantt-cell medium">desarrollo</div>
+            <div class="gantt-cell medium">desarrollo</div>
+            <div class="gantt-cell high">funnels</div>
+            <div class="gantt-cell high">funnels</div>
+            <div class="gantt-cell milestone">teaser</div>
+            <div class="gantt-cell high">waitlist</div>
+            <div class="gantt-cell high">waitlist</div>
+            <div class="gantt-cell high">prep launch</div>
+            <div class="gantt-cell launch">GO-LIVE</div>
+            <div class="gantt-cell peak">primeros deals</div>
+            <div class="gantt-cell peak">escalar</div>
 
-            <div class="card">
-                <div style="font-size:var(--tiny-size); color:var(--warning); font-weight:700; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:0.5rem;">2027+</div>
-                <h3>Escalar PFP</h3>
-                <ul>
-                    <li>Go-live PFP Q1 2027</li>
-                    <li>Plataforma como motor</li>
-                    <li>Expansión retail</li>
-                    <li>Videojuegos como vertical nuevo</li>
-                </ul>
+            <!-- Track 4: Pro Tax + Partnerships -->
+            <div class="gantt-track-label">
+                🤝 Pro Tax · partnerships
+                <span class="track-meta">Owner: Beto (Andbank, etc.)</span>
             </div>
+            <div class="gantt-cell low">Andbank</div>
+            <div class="gantt-cell medium">demos</div>
+            <div class="gantt-cell medium">demos</div>
+            <div class="gantt-cell low">verano</div>
+            <div class="gantt-cell low">verano</div>
+            <div class="gantt-cell medium">retomar</div>
+            <div class="gantt-cell medium">cierres</div>
+            <div class="gantt-cell medium">cierres</div>
+            <div class="gantt-cell low">balance</div>
+            <div class="gantt-cell low">—</div>
+            <div class="gantt-cell low">—</div>
+            <div class="gantt-cell medium">expansión</div>
+
+            <!-- Track 5: CRM + sistemas -->
+            <div class="gantt-track-label">
+                🛠 CRM + sistemas
+                <span class="track-meta">Owner: Growth4U</span>
+            </div>
+            <div class="gantt-cell peak">SETUP</div>
+            <div class="gantt-cell high">data</div>
+            <div class="gantt-cell high">operativo</div>
+            <div class="gantt-cell medium">refinar</div>
+            <div class="gantt-cell medium">refinar</div>
+            <div class="gantt-cell high">funnels PFP</div>
+            <div class="gantt-cell high">email mkt</div>
+            <div class="gantt-cell high">email mkt</div>
+            <div class="gantt-cell medium">optim.</div>
+            <div class="gantt-cell high">CRM PFP live</div>
+            <div class="gantt-cell medium">optim.</div>
+            <div class="gantt-cell medium">optim.</div>
         </div>
 
-        <div class="reveal callout-warn callout">
-            <strong>Distribución de owners (versión Sandra):</strong> David = inversores (anticipo + incentivo) · Ignacio = promotores (cupo) · Beto = partnerships Pro Tax (Andbank, etc.) · Cristina de Vierna + Sandra = producto PFP + tech · Sandra = coordinación/operativa · Growth4U = estructura CRM, templates, case studies, funnels PFP.
+        <div class="reveal gantt-legend">
+            <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background: rgba(255,255,255,0.03);"></span>Pausado</div>
+            <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background: rgba(168, 85, 247, 0.08);"></span>Bajo</div>
+            <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background: rgba(168, 85, 247, 0.25);"></span>Medio</div>
+            <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background: rgba(168, 85, 247, 0.55);"></span>Alto</div>
+            <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background: linear-gradient(135deg, var(--accent-purple), var(--accent-violet));"></span>Foco máximo</div>
+            <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background: linear-gradient(135deg, var(--accent-pink), var(--accent-violet));"></span>Hito</div>
+            <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background: linear-gradient(135deg, var(--accent-teal), var(--accent-purple));"></span>Lanzamiento</div>
+        </div>
+
+        <div class="reveal callout" style="margin-top: clamp(0.5rem, 1vw, 0.75rem);">
+            <strong>Tres olas de foco:</strong> (1) <strong>Mayo–Sep</strong> incentivo fiscal puro · pico de la temporada. (2) <strong>Oct–Dic</strong> re-enganche del anticipo + lanzamiento del teaser PFP. (3) <strong>Ene 2027</strong> go-live de la PFP. CRM y partnerships avanzan en paralelo todo el año, con setup intenso ahora.
         </div>
     </div>
 </section>
